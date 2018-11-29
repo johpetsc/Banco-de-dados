@@ -1,0 +1,62 @@
+CREATE TABLE "PESSOA" (
+  "cpf" INTEGER PRIMARY KEY,
+  "p_nome" VARCHAR(15),
+  "u_nome" VARCHAR(15),
+  "data_nascimento" DATE,
+  "idade" INTEGER NOT NULL,
+  "endereco" VARCHAR(120)
+);
+
+CREATE TABLE "MIDIA" (
+  "id_midia" INTEGER PRIMARY KEY,
+  "noticia_id" INTEGER REFERENCES NOTICIA(noticia_id),
+  "tipo_midia" VARCHAR(20),
+  "nome_arq" VARCHAR(30),
+  "tamanho_arq" INTEGER,
+  "formato_arq" VARCHAR(5)
+);
+
+
+CREATE TABLE "MEIO_COMUNICACAO" (
+  "noticia_id" INTEGER REFERENCES NOTICIA(noticia_id),
+  "tipo_meiocom" VARCHAR(20),
+  "data_postagem" DATE
+);
+
+
+CREATE TABLE "NOTICIA" (
+  "noticia_id" INTEGER PRIMARY KEY,
+  "data_publicacao" DATE
+);
+
+CREATE TABLE "PARTIDO" (
+  "nome" VARCHAR(20) PRIMARY KEY,
+  "num_id" INTEGER REFERENCES CANDIDATO(num_id),
+  "sigla" VARCHAR(10),
+  "data_fundacao" DATE
+);
+
+
+CREATE TABLE "FOTO" (
+  "foto_id" INTEGER PRIMARY KEY,
+  "cpf" INTEGER REFERENCES PESSOA(cpf),
+  "tipo_foto" VARCHAR(20),
+  "nome_foto" VARCHAR(50),
+  "tamanho_foto" INTEGER,
+  "formato_foto" VARCHAR(5)
+);
+
+
+CREATE TABLE "CARGO_POLITICO" (
+  "id_cargo" INTEGER PRIMARY KEY,
+  "num_id" INTEGER REFERENCES CARGO_POLITICO(num_id),
+  "nome_cargo" VARCHAR(50)
+);
+
+
+CREATE TABLE "CANDIDATO" (
+  "num_id" INTEGER PRIMARY KEY,
+  "cpf" INTEGER REFERENCES CANDIDATO(cpf)
+  "p_nome" VARCHAR(15) REFERENCES PESSOA(p_nome),
+  "u_nome" VARCHAR(15) REFERENCES PESSOA(u_nome)
+);
