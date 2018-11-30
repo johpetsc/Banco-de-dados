@@ -1,11 +1,15 @@
 import pymysql
- 
+import os
+
 connection = pymysql.connect(
     host='localhost',
     user='root',
     password='palavra',
     db='trabalhobd',
 )
+
+def cls():
+    os.system('cls' if os.name=='nt' else 'clear')
 
 def create():
     cpf = input("cpf: ")
@@ -73,8 +77,19 @@ def delete():
     finally:
         connection.close()
 
+cls()
 
-#create()
-read()
-#update()
-#delete()
+print("\t\t\tCRUD para o banco de dados.\n\n")
+print("\tCREATE - 1 \n\n\tREAD - 2 \n\n\tUPDATE - 3 \n\n\tDELETE - 4 \n\n\tSair - 0")
+opc = input("\n\n\tOpção:")
+
+cls()
+
+if opc == "1":
+    create()
+elif opc == "2":
+    read()
+elif opc == "3":
+    update()
+elif opc == "4":
+    delete()
