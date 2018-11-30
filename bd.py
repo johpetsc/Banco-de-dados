@@ -20,9 +20,9 @@ def create():
             sql = "INSERT INTO pessoa (cpf, p_nome, u_nome, data_nascimento, idade, endereco) VALUES (%s, %s, %s, %s, %s, %s);"
             try:
                 cursor.execute(sql, (cpf, p_nome, u_nome, data_nascimento, idade, endereco))
-                print("Task added successfully")
+                print("Pessoa adicionada com sucesso.")
             except:
-                print("Oops! Something wrong")
+                print("Falha ao adicionar pessoa.")
         connection.commit()
     finally:
         connection.close()
@@ -40,7 +40,7 @@ def read():
                 for row in result:
                     print(row)
             except:
-                print("Oops! Something wrong")
+                print("Falha ao ler tabela.")
         connection.commit()
     finally:
         connection.close()
@@ -51,9 +51,9 @@ def update():
             sql = "UPDATE pessoa SET p_nome=%s, u_nome=%s WHERE cpf = %s"
             try:
                 cursor.execute(sql, ('Joao', 'Doido', 1))
-                print("Successfully Updated...")
+                print("Pessoa atualizada com sucesso.")
             except:
-                print("Oops! Something wrong")
+                print("Falha ao atualizar pessoa.")
     
         connection.commit()
     finally:
@@ -65,9 +65,9 @@ def delete():
             sql = "DELETE FROM pessoa WHERE cpf = %s"
             try:
                 cursor.execute(sql, (1))
-                print("Successfully Deleted...")
+                print("Pessoa deletada com sucesso.")
             except:
-                print("Oops! Something wrong")
+                print("Falha ao deletar pessoa.")
     
         connection.commit()
     finally:
