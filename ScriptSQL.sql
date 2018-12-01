@@ -22,7 +22,7 @@ CREATE TABLE PESSOA(
 CREATE TABLE REGIAO(
   id_regiao INTEGER PRIMARY KEY AUTO_INCREMENT,
   nome_regiao VARCHAR(20) NOT NULL,
-  num_eleitores INTEGER NOT NULL,
+  num_eleitores INTEGER,
   num_candidatos INTEGER
 );
 
@@ -30,8 +30,8 @@ CREATE TABLE ELEITOR(
   id_eleitor INTEGER PRIMARY KEY AUTO_INCREMENT,
   id_pessoa INTEGER NOT NULL,
   id_regiao INTEGER NOT NULL,
-  zona VARCHAR(15) NOT NULL,
-  secao VARCHAR(5) NOT NULL,
+  zona VARCHAR(20) NOT NULL,
+  secao INTEGER NOT NULL,
   FOREIGN KEY(id_pessoa) REFERENCES PESSOA(id_pessoa),
   FOREIGN KEY(id_regiao) REFERENCES REGIAO(id_regiao)
 );
@@ -47,7 +47,6 @@ CREATE TABLE CANDIDATO (
 CREATE TABLE FOTO (
   foto_id INTEGER PRIMARY KEY AUTO_INCREMENT,
   id_pessoa INTEGER NOT NULL,
-  tipo_foto VARCHAR(20) NOT NULL,
   nome_foto VARCHAR(50) NOT NULL,
   tamanho_foto INTEGER NOT NULL,
   formato_foto VARCHAR(5) NOT NULL,
@@ -63,9 +62,10 @@ CREATE TABLE CARGO_POLITICO (
 
 CREATE TABLE PARTIDO (
   id_partido INTEGER PRIMARY KEY AUTO_INCREMENT,
+  id_regiao INTEGER NOT NULL,
+  nome_partido VARCHAR(30) NOT NULL,
   sigla VARCHAR(10) NOT NULL,
   data_fundacao DATE,
-  id_regiao INTEGER NOT NULL,
   FOREIGN KEY(id_regiao) REFERENCES REGIAO(id_regiao)
 );
 
@@ -91,7 +91,6 @@ CREATE TABLE MEIO_COMUNICACAO(
   comunicacao_id INTEGER PRIMARY KEY AUTO_INCREMENT,
   noticia_id INTEGER NOT NULL,
   tipo_meiocom VARCHAR(20) NOT NULL,
-  desc_meiocom VARCHAR(20) NOT NULL,
   data_postagem DATE,
   FOREIGN KEY(noticia_id) REFERENCES NOTICIA(noticia_id)
 );
