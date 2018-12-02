@@ -137,7 +137,8 @@ values (1, 1, 1),
        (3, 12, 4),
        (4, 6, 3),   
        (5, 2, 5),
-       (6, 8, 4);
+       (6, 8, 4),
+       (7, 13, 2);
 
 INSERT INTO FOTO(foto_id, id_pessoa, nome_foto, tamanho_foto, formato_foto)
 values (1, 1, 'batman_presidente', 110, 'jpg'),
@@ -157,12 +158,13 @@ values (1, 1, 'batman_presidente', 110, 'jpg'),
        (15, 13, 'pinguim_3x4', 199, 'png');
 
 INSERT INTO CARGO_POLITICO(id_cargo, num_id, nome_cargo)
-values (1, 6, 'Presidente'),
+values (1, 1, 'Presidente'),
        (2, 5, 'Governador'),
-       (3, 4, 'Prefeito'),
-       (4, 3, 'Vereador'),
-       (5, 2, 'Deputado Estadual'),
-       (6, 1, 'Deputado Estadual');
+       (3, 2, 'Prefeito'),
+       (4, 6, 'Vereador'),
+       (5, 4, 'Deputado Estadual'),
+       (6, 7, 'Deputado Estadual'),
+       (7, 7, 'Deputado Federal');
 
 INSERT INTO PARTIDO(id_partido, id_regiao, nome_partido, sigla, data_fundacao)
 values (1, 3, 'Partido da Marvel', 'PdM', '1947-06-11'),
@@ -195,7 +197,7 @@ values (1, 4, 'Jornal TV', '2018-11-15'),
        (5, 3, 'Jornal Internet', '2018-10-02'),
        (6, 5, 'Jornal TV', '2018-05-22'),
        (7, 4, 'Jornal Internet', '2018-11-14');
-
+       
 CREATE VIEW cand AS
 SELECT num_id AS Id,
        id_pessoa AS Pessoa,
