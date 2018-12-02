@@ -195,3 +195,21 @@ values (1, 4, 'Jornal TV', '2018-11-15'),
        (5, 3, 'Jornal Internet', '2018-10-02'),
        (6, 5, 'Jornal TV', '2018-05-22'),
        (7, 4, 'Jornal Internet', '2018-11-14');
+
+CREATE VIEW cand AS
+SELECT num_id AS Id,
+       id_pessoa AS Pessoa,
+       id_regiao AS Regiao
+FROM candidato;
+
+SELECT * FROM cand;
+
+DELIMITER $$
+CREATE PROCEDURE selecionar_pessoas (OUT quantidade INT)
+BEGIN
+    SELECT COUNT(*) INTO quantidade FROM pessoa;
+END $$
+DELIMITER ;
+
+CALL selecionar_pessoas(@total);
+SELECT @total;
