@@ -79,7 +79,7 @@ CREATE TABLE NOTICIA (
 
 CREATE TABLE AVALIADOR (
   id_avaliador INTEGER PRIMARY KEY AUTO_INCREMENT,
-  nome_avaliador VARCHAR(50) NOT NULL,
+  nome_avaliador VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE NOTICIAS_AVALIADAS (
@@ -169,7 +169,7 @@ values (1, 1, 'batman_presidente', 110, 'jpg'),
        (12, 9, 'tonystark1', 256, 'jpg'),
        (13, 10, 'cpt_america_3x4', 99, 'png'),
        (14, 11, 'prof_zoom', 211, 'jpg'),
-       (15, 13, 'pinguim_3x4', 199, 'png')
+       (15, 13, 'pinguim_3x4', 199, 'png');
 
 INSERT INTO CARGO_POLITICO(id_cargo, num_id, nome_cargo)
 values (1, 1, 'Presidente'),
