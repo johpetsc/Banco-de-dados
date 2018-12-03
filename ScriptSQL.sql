@@ -1,5 +1,6 @@
 DROP TABLE IF EXISTS CARGO_POLITICO;
 DROP TABLE IF EXISTS MIDIA;
+DROP TABLE IF EXISTS NOTICIAS_AVALIADAS;
 DROP TABLE IF EXISTS MEIO_COMUNICACAO;
 DROP TABLE IF EXISTS FOTO;
 DROP TABLE IF EXISTS ELEITOR;
@@ -7,6 +8,7 @@ DROP TABLE IF EXISTS PARTIDO;
 DROP TABLE IF EXISTS CANDIDATO;
 DROP TABLE IF EXISTS REGIAO;
 DROP TABLE IF EXISTS PESSOA;
+DROP TABLE IF EXISTS AVALIADOR;
 DROP TABLE IF EXISTS NOTICIA;
 
 CREATE TABLE PESSOA(
@@ -15,7 +17,6 @@ CREATE TABLE PESSOA(
   p_nome VARCHAR(15) NOT NULL,
   u_nome VARCHAR(15) NOT NULL,
   data_nascimento DATE NOT NULL,
-  idade INTEGER NOT NULL,
   endereco VARCHAR(120) NOT NULL
 );
 
@@ -76,6 +77,19 @@ CREATE TABLE NOTICIA (
   texto VARCHAR(1000) NOT NULL
 );
 
+CREATE TABLE AVALIADOR (
+  id_avaliador INTEGER PRIMARY KEY AUTO_INCREMENT,
+  nome_avaliador VARCHAR(50) NOT NULL,
+);
+
+CREATE TABLE NOTICIAS_AVALIADAS (
+  noticia_id INTEGER NOT NULL,
+  id_avaliador INTEGER NOT NULL,
+  avaliacao VARCHAR(15) NOT NULL,
+  FOREIGN KEY(noticia_id) REFERENCES NOTICIA(noticia_id),
+  FOREIGN KEY(id_avaliador) REFERENCES AVALIADOR(id_avaliador)
+);
+
 CREATE TABLE MIDIA (
   id_midia INTEGER PRIMARY KEY AUTO_INCREMENT,
   noticia_id INTEGER NOT NULL,
@@ -95,20 +109,20 @@ CREATE TABLE MEIO_COMUNICACAO(
   FOREIGN KEY(noticia_id) REFERENCES NOTICIA(noticia_id)
 );
 
-INSERT INTO PESSOA(id_pessoa, cpf, p_nome, u_nome, data_nascimento, idade, endereco)
-values (1, 13371337, 'Bruce', 'Wayne', '1971-2-14', 47, 'Wayne Mansion, 17, Gotham Federal'),
-       (2, 10011001, 'Thor', 'Thundergod', '516-07-04', 1502, 'City Hall, 01, Asgard de Janeiro'),
-       (3, 12345678, 'Bruce', 'Banner', '1962-05-11', 56, 'River Street, 30, Dayton, Atlantis do Norte'),
-       (4, 89453845, 'Sheriff', 'Woody', '1995-12-22', 22, 'Bed, Andy´s Bedroom, Ohio Grosso'),
-       (5, 99999999, 'Faisca', 'McQueen', '2006-06-30', 12, 'Radiator Springs, 120, California do Sul'),
-       (6, 10000001, 'Aqua', 'Man', '1941-11-02', 77, 'Aurania, 10, Atlantis do Norte'),
-       (7, 19984471, 'Ron', 'Wesley', '1999-05-13', 22, 'Downhill Abbey, 133, Asgard de Janeiro'),
-       (8, 14625879, 'Albus', 'Dumbledore', '1881-04-15', 137, 'Hogwarts School of Wizardry, Ohio Grosso'),
-       (9, 66587831, 'Tony', 'Stark', '1963-01-17', 55, 'Stark Building, 91, Atlantis do Norte'),
-       (10, 14725836, 'Capitao', 'America', '1941-03-15', 77, 'Venture Park, 32, California do Sul'),
-       (11, 15947538, 'Eobard', 'Thawne', '1963-09-22', 55, 'S.T.A.R. Labs, 154, Gotham Federal'),
-       (12, 14563289, 'Diana', 'Prince', '1941-10-05', 77, 'Central Park, 11, Ohio Grosso'),
-       (13, 86248426, 'Pinguim', 'Surfista', '2007-10-26', 11, 'Praia das Rochas, 1337, California do Sul');
+INSERT INTO PESSOA(id_pessoa, cpf, p_nome, u_nome, data_nascimento, endereco)
+values (1, 13371337, 'Bruce', 'Wayne', '1971-2-14', 'Wayne Mansion, 010 Gotham Federal'),
+       (2, 10011001, 'Thor', 'Thundergod', '516-07-04', 'City Hall, 17, Asgard de Janeiro'),
+       (3, 12345678, 'Bruce', 'Banner', '1962-05-11', 'River Street, 30, Dayton, Atlantis do Norte'),
+       (4, 89453845, 'Sheriff', 'Woody', '1995-12-22', 'Bed, Andy´s Bedroom, Ohio Grosso'),
+       (5, 99999999, 'Faisca', 'McQueen', '2006-06-30', 'Radiator Springs, 120, California do Sul'),
+       (6, 10000001, 'Aqua', 'Man', '1941-11-02', 'Aurania, 10, Atlantis do Norte'),
+       (7, 19984471, 'Ron', 'Wesley', '1999-05-13', 'Downhill Abbey, 133, Asgard de Janeiro'),
+       (8, 14625879, 'Albus', 'Dumbledore', '1881-04-15', 'Hogwarts School of Wizardry, Ohio Grosso'),
+       (9, 66587831, 'Tony', 'Stark', '1963-01-17', 'Stark Building, 91, Atlantis do Norte'),
+       (10, 14725836, 'Capitao', 'America', '1941-03-15', 'Venture Park, 32, California do Sul'),
+       (11, 15947538, 'Eobard', 'Thawne', '1963-09-22', 'S.T.A.R. Labs, 154, Gotham Federal'),
+       (12, 14563289, 'Diana', 'Prince', '1941-10-05', 'Central Park, 11, Ohio Grosso'),
+       (13, 86248426, 'Pinguim', 'Surfista', '2007-10-26', 'Praia das Rochas, 1337, California do Sul');
 	   
 INSERT INTO REGIAO(id_regiao, nome_regiao, num_eleitores, num_candidatos)
 values (1, 'Gotham Federal', 2, 1),
@@ -155,7 +169,7 @@ values (1, 1, 'batman_presidente', 110, 'jpg'),
        (12, 9, 'tonystark1', 256, 'jpg'),
        (13, 10, 'cpt_america_3x4', 99, 'png'),
        (14, 11, 'prof_zoom', 211, 'jpg'),
-       (15, 13, 'pinguim_3x4', 199, 'png');
+       (15, 13, 'pinguim_3x4', 199, 'png')
 
 INSERT INTO CARGO_POLITICO(id_cargo, num_id, nome_cargo)
 values (1, 1, 'Presidente'),
@@ -164,7 +178,7 @@ values (1, 1, 'Presidente'),
        (4, 6, 'Vereador'),
        (5, 4, 'Deputado Estadual'),
        (6, 7, 'Deputado Estadual'),
-       (7, 7, 'Deputado Federal');
+       (7, 3, 'Deputada Federal'); 
 
 INSERT INTO PARTIDO(id_partido, id_regiao, nome_partido, sigla, data_fundacao)
 values (1, 3, 'Partido da Marvel', 'PdM', '1947-06-11'),
@@ -179,15 +193,31 @@ values (1, '2018-05-12', 'Presidente Batman promete aumento de 200 reais nos sal
        (4, '2018-11-14', 'Candidata Diana lidera a corrida por 12 milhoes de votos', 'Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?'),
        (5, '2018-05-22', 'Vereador Aquaman preso por lavagem de dinheiro', 'Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.');
 
+INSERT INTO AVALIADOR(id_avaliador, nome_avaliador)
+values (1, 'Norman Osborn'),
+       (2, 'Otto Octavius');
+
+INSERT INTO NOTICIAS_AVALIADAS(noticia_id, id_avaliador, avaliacao)
+values (1, 1, 'Fake'),
+       (2, 1, 'Nao Fake'),
+       (3, 1, 'Nao Fake'),
+       (4, 1, 'Fake'),
+       (5, 1, 'Nao Fake'),
+       (1, 2, 'Fake'),
+       (2, 2, 'Nao Fake'),
+       (3, 2, 'Nao Fake'),
+       (4, 2, 'Nao Fake'),
+       (5, 2, 'Fake');
+
 INSERT INTO MIDIA(id_midia, noticia_id, tipo_midia, nome_arq, tamanho_arq, formato_arq)
 values (1, 1, 'Imagem', 'batman_2017', 109, 'jpg'),
        (2, 4, 'Imagem', 'grafico_votos', 201, 'png'),
        (3, 5, 'Audio', 'aquaman_interrogatorio', 2110, 'mp3'),
-       (4, 4, 'Video', 'diana_em_sp', 13490, 'avi'),
-       (5, 2, 'Audio', 'prova_desvio_alfa', 1600, 'mp3'),
-       (6, 3, 'Imagem', 'omega_alia_beta', 170, 'jpg'),
+       (4, 4, 'Video', 'diana_em_cs', 13490, 'avi'),
+       (5, 2, 'Audio', 'prova_desvio_dc', 1600, 'mp3'),
+       (6, 3, 'Imagem', 'pp_alia_php', 170, 'jpg'),
        (7, 5, 'Imagem', 'aquaman_2018', 111, 'jpg'),
-       (8, 3, 'Video', 'omega_beta_em_rj', 9550, 'mp4');
+       (8, 3, 'Video', 'php_pp_juntos', 9550, 'mp4');
 
 INSERT INTO MEIO_COMUNICACAO(comunicacao_id, noticia_id, tipo_meiocom, data_postagem)
 values (1, 4, 'Jornal TV', '2018-11-15'),
