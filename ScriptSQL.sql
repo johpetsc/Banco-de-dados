@@ -2,7 +2,6 @@ DROP TABLE IF EXISTS CARGO_POLITICO;
 DROP TABLE IF EXISTS MIDIA;
 DROP TABLE IF EXISTS NOTICIAS_AVALIADAS;
 DROP TABLE IF EXISTS MEIO_COMUNICACAO;
-DROP TABLE IF EXISTS FOTO;
 DROP TABLE IF EXISTS ELEITOR;
 DROP TABLE IF EXISTS PARTIDO;
 DROP TABLE IF EXISTS CANDIDATO;
@@ -10,6 +9,8 @@ DROP TABLE IF EXISTS REGIAO;
 DROP TABLE IF EXISTS PESSOA;
 DROP TABLE IF EXISTS AVALIADOR;
 DROP TABLE IF EXISTS NOTICIA;
+DROP TABLE IF EXISTS NOTICIAS_CANDIDATOS;
+DROP TABLE IF EXISTS NOTICIAS_PARTIDOS;
 
 CREATE TABLE PESSOA(
   id_pessoa INTEGER PRIMARY KEY AUTO_INCREMENT,
@@ -40,25 +41,20 @@ CREATE TABLE ELEITOR(
 CREATE TABLE CANDIDATO (
   num_id INTEGER PRIMARY KEY AUTO_INCREMENT,
   id_pessoa INTEGER NOT NULL,
+  id_partido INTEGER NOT NULL,
   id_regiao INTEGER NOT NULL,
+  id_cargo INTEGER NOT NULL,
   FOREIGN KEY(id_pessoa) REFERENCES PESSOA(id_pessoa),
-  FOREIGN KEY(id_regiao) REFERENCES REGIAO(id_regiao)
+  FOREIGN KEY(id_partido) REFERENCES PARTIDO(id_partido),
+  FOREIGN KEY(id_regiao) REFERENCES REGIAO(id_regiao),
+  FOREIGN KEY(id_cargo) REFERENCES CARGO_POLITICO(id_cargo)
 );
 
-CREATE TABLE FOTO (
-  foto_id INTEGER PRIMARY KEY AUTO_INCREMENT,
-  id_pessoa INTEGER NOT NULL,
-  nome_foto VARCHAR(50) NOT NULL,
-  tamanho_foto INTEGER NOT NULL,
-  formato_foto VARCHAR(5) NOT NULL,
-  FOREIGN KEY(id_pessoa) REFERENCES PESSOA(id_pessoa)
-);
 
 CREATE TABLE CARGO_POLITICO (
   id_cargo INTEGER PRIMARY KEY AUTO_INCREMENT,
   num_id INTEGER NOT NULL,
-  nome_cargo VARCHAR(50) NOT NULL,
-  FOREIGN KEY(num_id) REFERENCES CANDIDATO(num_id)
+  nome_cargo VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE PARTIDO (
@@ -86,8 +82,25 @@ CREATE TABLE NOTICIAS_AVALIADAS (
   noticia_id INTEGER NOT NULL,
   id_avaliador INTEGER NOT NULL,
   avaliacao VARCHAR(15) NOT NULL,
+  PRIMARY KEY(noticia_id, id_avaliador),
   FOREIGN KEY(noticia_id) REFERENCES NOTICIA(noticia_id),
   FOREIGN KEY(id_avaliador) REFERENCES AVALIADOR(id_avaliador)
+);
+
+CREATE TABLE NOTICIAS_CANDIDATOS(
+  noticia_id INTEGER NOT NULL,
+  num_id INTEGER NOT NULL,
+  PRIMARY KEY(noticia_id, num_id),
+  FOREIGN KEY(noticia_id) REFERENCES NOTICIA(noticia_id),
+  FOREIGN KEY(num_id) REFERENCES CANDIDATO(num_id)
+);
+
+CREATE TABLE NOTICIAS_PARTIDOS(
+  noticia_id INTEGER NOT NULL,
+  id_partido INTEGER NOT NULL,
+  PRIMARY KEY(noticia_id, id_partido),
+  FOREIGN KEY(noticia_id) REFERENCES NOTICIA(noticia_id),
+  FOREIGN KEY(id_partido) REFERENCES PARTIDO(id_partido)
 );
 
 CREATE TABLE MIDIA (
@@ -154,22 +167,6 @@ values (1, 1, 1),
        (6, 8, 4),
        (7, 13, 2);
 
-INSERT INTO FOTO(foto_id, id_pessoa, nome_foto, tamanho_foto, formato_foto)
-values (1, 1, 'batman_presidente', 110, 'jpg'),
-       (2, 1, 'batman_2017', 109, 'jpg'),
-       (3, 6, 'aquaman_2018', 111, 'png'),
-       (4, 12, 'diana_3x4', 89, 'jpg'),
-       (5, 12, 'diana_no_df', 281, 'png'),
-       (6, 2, 'thor_3x4', 90, 'png'),
-       (7, 3, 'bruce_2009', 211, 'jpg'),
-       (8, 4, 'woody', 198, 'png'),
-       (9, 5, 'faisca_mcqueen_2007', 101, 'jpg'),
-       (10, 7, 'ron_wesley2', 222, 'png'),
-       (11, 8, 'dumbledore_2012', 199, 'png'),
-       (12, 9, 'tonystark1', 256, 'jpg'),
-       (13, 10, 'cpt_america_3x4', 99, 'png'),
-       (14, 11, 'prof_zoom', 211, 'jpg'),
-       (15, 13, 'pinguim_3x4', 199, 'png');
 
 INSERT INTO CARGO_POLITICO(id_cargo, num_id, nome_cargo)
 values (1, 1, 'Presidente'),
