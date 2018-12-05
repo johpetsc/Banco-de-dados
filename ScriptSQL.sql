@@ -158,16 +158,6 @@ values (1, 3, 3, 'Atlantis High School', 011),
        (11, 12, 4, 'Ohio´s Kids School', 012),
        (12, 13, 2, 'Californa Kindergarten', 080);
 
-INSERT INTO CANDIDATO(num_id, id_pessoa, id_regiao)
-values (1, 1, 1),
-       (2, 7, 5),
-       (3, 12, 4),
-       (4, 6, 3),   
-       (5, 2, 5),
-       (6, 8, 4),
-       (7, 13, 2);
-
-
 INSERT INTO CARGO_POLITICO(id_cargo, num_id, nome_cargo)
 values (1, 1, 'Presidente'),
        (2, 5, 'Governador'),
@@ -182,6 +172,15 @@ values (1, 3, 'Partido da Marvel', 'PdM', '1947-06-11'),
        (2, 1, 'Partido da DC', 'PDC', '1934-08-17'),
        (3, 1, 'Partido Pixar', 'PP', '1986-02-03'),
        (4, 2, 'Partido Harry Potter', 'PHP', '2002-05-11');
+
+INSERT INTO CANDIDATO(num_id, id_partido, id_pessoa, id_regiao)
+values (1, 1, 1, 1),
+       (2, 4, 7, 5),
+       (3, 4, 12, 4),
+       (4, 1, 6, 3),   
+       (5, 2, 2, 5),
+       (6, 2, 8, 4),
+       (7, 3, 13, 2);
 
 INSERT INTO NOTICIA(noticia_id, data_publicacao, titulo_noticia, texto)
 values (1, '2018-05-12', 'Presidente Batman promete aumento de 200 reais nos salarios', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.'),
