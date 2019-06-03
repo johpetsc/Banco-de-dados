@@ -9,7 +9,7 @@ class Application:
         self.cont = tk.Frame(master)
         self.cont["pady"] = 20
         self.cont.pack()
-        self.msg = tk.Label(self.cont, text="Banco de Dados")
+        self.msg = tk.Label(self.cont, text="Banco de Dados para Fake News")
         self.msg["font"] = ("Arial", "10", "bold")
         self.msg.pack()
 
@@ -20,10 +20,6 @@ class Application:
         self.cont3 = tk.Frame(None)
         self.cont3["pady"] = 10
         self.cont3.pack()
-
-        self.cont1 = tk.Frame(None)
-        self.cont1["pady"] = 10
-        self.cont1.pack()
 
         self.cont4 = tk.Frame(None)
         self.cont4["pady"] = 0
@@ -40,6 +36,14 @@ class Application:
         self.cont7 = tk.Frame(None)
         self.cont7["pady"] = 0
         self.cont7.pack()
+
+        self.cont8 = tk.Frame(None)
+        self.cont8["pady"] = 0
+        self.cont8.pack()
+
+        self.cont1 = tk.Frame(None)
+        self.cont1["pady"] = 10
+        self.cont1.pack()
 
         self.erro = tk.Frame(None)
         self.erro["pady"] = 0
@@ -73,12 +77,32 @@ class Application:
         self.delete["command"] = self.Delete
         self.delete.pack(side=tk.LEFT)
 
+        self.voltar = tk.Button(self.cont2)
+        self.voltar["text"] = "Voltar"
+        self.voltar["font"] = self.fonte
+        self.voltar["width"] = 5
+        self.voltar["command"] = self.Voltar
+        self.voltar.pack(side=tk.LEFT)
+
         self.sair = tk.Button(self.cont2)
         self.sair["text"] = "Sair"
         self.sair["font"] = self.fonte
         self.sair["width"] = 5
         self.sair["command"] = self.cont.quit
         self.sair.pack(side=tk.RIGHT)
+    
+    def Voltar(self):
+        self.cont.pack_forget()
+        self.cont1.pack_forget()
+        self.cont2.pack_forget()
+        self.cont3.pack_forget()
+        self.cont4.pack_forget()
+        self.cont5.pack_forget()
+        self.cont6.pack_forget()
+        self.cont7.pack_forget()
+        self.cont8.pack_forget()
+        self.erro.pack_forget()
+        Application()
 
     def Create(self):
         msg = tk.Label(self.cont3, text="Create")
@@ -126,7 +150,7 @@ class Application:
             self.ent3["font"] = self.fonte
             self.ent3.pack(side=tk.BOTTOM)
             #cont6
-            data = tk.Label(self.cont6, text="Data: ")
+            data = tk.Label(self.cont6, text="Data Nascimento: ")
             data.pack(side=tk.TOP)
             self.ent4 = tk.Entry(self.cont6)
             self.ent4["width"] = 30
@@ -154,23 +178,29 @@ class Application:
             msg.pack(side=tk.TOP)
             reg = tk.Label(self.cont4, text="Nome da Região: ")
             reg.pack(side=tk.TOP)
-            ent1 = tk.Entry(self.cont4)
-            ent1["width"] = 30
-            ent1["font"] = self.fonte
-            ent1.pack(side=tk.RIGHT)
+            self.ent1 = tk.Entry(self.cont4)
+            self.ent1["width"] = 30
+            self.ent1["font"] = self.fonte
+            self.ent1.pack(side=tk.RIGHT)
             #cont5
             eleit = tk.Label(self.cont5, text="Num de eleitores: ")
             eleit.pack(side=tk.TOP)
-            ent2 = tk.Entry(self.cont5)
-            ent2["width"] = 30
-            ent2["font"] = self.fonte
-            ent2.pack(side=tk.BOTTOM)
+            self.ent2 = tk.Entry(self.cont5)
+            self.ent2["width"] = 30
+            self.ent2["font"] = self.fonte
+            self.ent2.pack(side=tk.BOTTOM)
             cand = tk.Label(self.cont5, text="Num de candidatos: ")
             cand.pack(side=tk.BOTTOM)
-            ent3 = tk.Entry(self.cont5)
-            ent3["width"] = 30
-            ent3["font"] = self.fonte
-            ent3.pack(side=tk.BOTTOM)
+            self.ent3 = tk.Entry(self.cont5)
+            self.ent3["width"] = 30
+            self.ent3["font"] = self.fonte
+            self.ent3.pack(side=tk.BOTTOM)
+            ir = tk.Button(self.cont7)
+            ir["text"] = "Inserir"
+            ir["font"] = self.fonte
+            ir["width"] = 5
+            ir.pack(side=tk.BOTTOM)
+            ir["command"] = self.callInsert
         elif self.op == "candidato":
             self.cont3.pack_forget()
             self.erro.pack_forget()
@@ -180,17 +210,23 @@ class Application:
             msg.pack(side=tk.TOP)
             pes = tk.Label(self.cont4, text="ID Pessoa: ")
             pes.pack(side=tk.TOP)
-            ent1 = tk.Entry(self.cont4)
-            ent1["width"] = 30
-            ent1["font"] = self.fonte
-            ent1.pack(side=tk.RIGHT)
+            self.ent1 = tk.Entry(self.cont4)
+            self.ent1["width"] = 30
+            self.ent1["font"] = self.fonte
+            self.ent1.pack(side=tk.RIGHT)
             #cont5
             regc = tk.Label(self.cont5, text="ID Regiao: ")
             regc.pack(side=tk.TOP)
-            ent2 = tk.Entry(self.cont5)
-            ent2["width"] = 30
-            ent2["font"] = self.fonte
-            ent2.pack(side=tk.BOTTOM)
+            self.ent2 = tk.Entry(self.cont5)
+            self.ent2["width"] = 30
+            self.ent2["font"] = self.fonte
+            self.ent2.pack(side=tk.BOTTOM)
+            ir = tk.Button(self.cont7)
+            ir["text"] = "Inserir"
+            ir["font"] = self.fonte
+            ir["width"] = 5
+            ir.pack(side=tk.BOTTOM)
+            ir["command"] = self.callInsert
         elif self.op == "eleitor":
             self.cont3.pack_forget()
             self.erro.pack_forget()
@@ -200,30 +236,36 @@ class Application:
             msg.pack(side=tk.TOP)
             pes2 = tk.Label(self.cont4, text="ID Pessoa: ")
             pes2.pack(side=tk.TOP)
-            ent1 = tk.Entry(self.cont4)
-            ent1["width"] = 30
-            ent1["font"] = self.fonte
-            ent1.pack(side=tk.RIGHT)
+            self.ent1 = tk.Entry(self.cont4)
+            self.ent1["width"] = 30
+            self.ent1["font"] = self.fonte
+            self.ent1.pack(side=tk.RIGHT)
             #cont5
             rege = tk.Label(self.cont5, text="ID Regiao: ")
             rege.pack(side=tk.TOP)
-            ent2 = tk.Entry(self.cont5)
-            ent2["width"] = 30
-            ent2["font"] = self.fonte
-            ent2.pack(side=tk.BOTTOM)
+            self.ent2 = tk.Entry(self.cont5)
+            self.ent2["width"] = 30
+            self.ent2["font"] = self.fonte
+            self.ent2.pack(side=tk.BOTTOM)
             zon = tk.Label(self.cont5, text="Zona: ")
             zon.pack(side=tk.BOTTOM)
-            ent3 = tk.Entry(self.cont5)
-            ent3["width"] = 30
-            ent3["font"] = self.fonte
-            ent3.pack(side=tk.BOTTOM)
+            self.ent3 = tk.Entry(self.cont5)
+            self.ent3["width"] = 30
+            self.ent3["font"] = self.fonte
+            self.ent3.pack(side=tk.BOTTOM)
             #cont7
             sec = tk.Label(self.cont7, text="Seção: ")
             sec.pack(side=tk.TOP)
-            ent6 = tk.Entry(self.cont7)
-            ent6["width"] = 30
-            ent6["font"] = self.fonte
-            ent6.pack(side=tk.BOTTOM)
+            self.ent6 = tk.Entry(self.cont7)
+            self.ent6["width"] = 30
+            self.ent6["font"] = self.fonte
+            self.ent6.pack(side=tk.BOTTOM)
+            ir = tk.Button(self.cont7)
+            ir["text"] = "Inserir"
+            ir["font"] = self.fonte
+            ir["width"] = 5
+            ir.pack(side=tk.BOTTOM)
+            ir["command"] = self.callInsert
         else:
             self.erro.pack_forget()
             self.erro = tk.Frame(None)
@@ -234,8 +276,29 @@ class Application:
             msg.pack(side=tk.TOP)
 
     def callInsert(self):
-        valores = self.ent1.get() + ", '" + self.ent2.get() + "', '" + self.ent3.get() + "', '" + self.ent4.get() + "', '" + self.ent6.get() + "'"
-        per.insert(self, self.op, valores)
+        if self.op == "pessoa":
+            valores = self.ent1.get() + ", '" + self.ent2.get() + "', '" + self.ent3.get() + "', '" + self.ent4.get() + "', '" + self.ent6.get() + "'"
+        elif self.op == "regiao":
+            valores = "'" + self.ent1.get() + "', " + self.ent2.get() + ", " + self.ent3.get()
+        elif self.op == "candidato":
+            valores = self.ent1.get() + ", '" + self.ent2.get() + "'"
+        elif self.op == "eleitor":
+            valores = self.ent1.get() + ", " + self.ent2.get() + ", '" + self.ent3.get() + "', " + self.ent6.get()
+        self.cont4.pack_forget()
+        self.cont5.pack_forget()
+        self.cont6.pack_forget()
+        self.cont7.pack_forget()
+        retorno = per.insert(self, self.op, valores)
+        msg = tk.Label(self.cont1, text=retorno)
+        msg["font"] = ("Arial", "10", "bold")
+        msg.pack(side=tk.TOP)
+        ir = tk.Button(self.cont1)
+        ir["text"] = "Ok"
+        ir["font"] = self.fonte
+        ir["width"] = 5
+        ir.pack(side=tk.BOTTOM)
+        ir["command"] = self.Voltar
+
 
     def Read(self):
         msg = tk.Label(self.cont3, text="Read")
@@ -312,6 +375,12 @@ class Application:
             msg1 = tk.Label(self.cont5, text=row)
             msg1["font"] = ("Arial", "10")
             msg1.pack(side=tk.TOP)
+        ir = tk.Button(self.cont1)
+        ir["text"] = "Ok"
+        ir["font"] = self.fonte
+        ir["width"] = 5
+        ir.pack(side=tk.BOTTOM)
+        ir["command"] = self.Voltar
     
     def Update(self):
         msg = tk.Label(self.cont3, text="Update")
@@ -401,23 +470,29 @@ class Application:
             msg.pack(side=tk.TOP)
             reg = tk.Label(self.cont4, text="Nome da Região: ")
             reg.pack(side=tk.TOP)
-            ent1 = tk.Entry(self.cont4)
-            ent1["width"] = 30
-            ent1["font"] = self.fonte
-            ent1.pack(side=tk.RIGHT)
+            self.ent1 = tk.Entry(self.cont4)
+            self.ent1["width"] = 30
+            self.ent1["font"] = self.fonte
+            self.ent1.pack(side=tk.RIGHT)
             #cont5
             eleit = tk.Label(self.cont5, text="Num de eleitores: ")
             eleit.pack(side=tk.TOP)
-            ent2 = tk.Entry(self.cont5)
-            ent2["width"] = 30
-            ent2["font"] = self.fonte
-            ent2.pack(side=tk.BOTTOM)
+            self.ent2 = tk.Entry(self.cont5)
+            self.ent2["width"] = 30
+            self.ent2["font"] = self.fonte
+            self.ent2.pack(side=tk.BOTTOM)
             cand = tk.Label(self.cont5, text="Num de candidatos: ")
             cand.pack(side=tk.BOTTOM)
-            ent3 = tk.Entry(self.cont5)
-            ent3["width"] = 30
-            ent3["font"] = self.fonte
-            ent3.pack(side=tk.BOTTOM)
+            self.ent3 = tk.Entry(self.cont5)
+            self.ent3["width"] = 30
+            self.ent3["font"] = self.fonte
+            self.ent3.pack(side=tk.BOTTOM)
+            ir = tk.Button(self.cont7)
+            ir["text"] = "Atualizar"
+            ir["font"] = self.fonte
+            ir["width"] = 5
+            ir.pack(side=tk.BOTTOM)
+            ir["command"] = self.callUpdate
         elif self.op == "candidato":
             self.cont3.pack_forget()
             self.erro.pack_forget()
@@ -428,17 +503,23 @@ class Application:
             msg.pack(side=tk.TOP)
             pes = tk.Label(self.cont4, text="ID Pessoa: ")
             pes.pack(side=tk.TOP)
-            ent1 = tk.Entry(self.cont4)
-            ent1["width"] = 30
-            ent1["font"] = self.fonte
-            ent1.pack(side=tk.RIGHT)
+            self.ent1 = tk.Entry(self.cont4)
+            self.ent1["width"] = 30
+            self.ent1["font"] = self.fonte
+            self.ent1.pack(side=tk.RIGHT)
             #cont5
             regc = tk.Label(self.cont5, text="ID Regiao: ")
             regc.pack(side=tk.TOP)
-            ent2 = tk.Entry(self.cont5)
-            ent2["width"] = 30
-            ent2["font"] = self.fonte
-            ent2.pack(side=tk.BOTTOM)
+            self.ent2 = tk.Entry(self.cont5)
+            self.ent2["width"] = 30
+            self.ent2["font"] = self.fonte
+            self.ent2.pack(side=tk.BOTTOM)
+            ir = tk.Button(self.cont7)
+            ir["text"] = "Atualizar"
+            ir["font"] = self.fonte
+            ir["width"] = 5
+            ir.pack(side=tk.BOTTOM)
+            ir["command"] = self.callUpdate
         elif self.op == "eleitor":
             self.cont3.pack_forget()
             self.erro.pack_forget()
@@ -449,30 +530,36 @@ class Application:
             msg.pack(side=tk.TOP)
             pes2 = tk.Label(self.cont4, text="ID Pessoa: ")
             pes2.pack(side=tk.TOP)
-            ent1 = tk.Entry(self.cont4)
-            ent1["width"] = 30
-            ent1["font"] = self.fonte
-            ent1.pack(side=tk.RIGHT)
+            self.ent1 = tk.Entry(self.cont4)
+            self.ent1["width"] = 30
+            self.ent1["font"] = self.fonte
+            self.ent1.pack(side=tk.RIGHT)
             #cont5
             rege = tk.Label(self.cont5, text="ID Regiao: ")
             rege.pack(side=tk.TOP)
-            ent2 = tk.Entry(self.cont5)
-            ent2["width"] = 30
-            ent2["font"] = self.fonte
-            ent2.pack(side=tk.BOTTOM)
+            self.ent2 = tk.Entry(self.cont5)
+            self.ent2["width"] = 30
+            self.ent2["font"] = self.fonte
+            self.ent2.pack(side=tk.BOTTOM)
             zon = tk.Label(self.cont5, text="Zona: ")
             zon.pack(side=tk.BOTTOM)
-            ent3 = tk.Entry(self.cont5)
-            ent3["width"] = 30
-            ent3["font"] = self.fonte
-            ent3.pack(side=tk.BOTTOM)
+            self.ent3 = tk.Entry(self.cont5)
+            self.ent3["width"] = 30
+            self.ent3["font"] = self.fonte
+            self.ent3.pack(side=tk.BOTTOM)
             #cont7
             sec = tk.Label(self.cont7, text="Seção: ")
             sec.pack(side=tk.TOP)
-            ent6 = tk.Entry(self.cont7)
-            ent6["width"] = 30
-            ent6["font"] = self.fonte
-            ent6.pack(side=tk.BOTTOM)
+            self.ent6 = tk.Entry(self.cont7)
+            self.ent6["width"] = 30
+            self.ent6["font"] = self.fonte
+            self.ent6.pack(side=tk.BOTTOM)
+            ir = tk.Button(self.cont7)
+            ir["text"] = "Atualizar"
+            ir["font"] = self.fonte
+            ir["width"] = 5
+            ir.pack(side=tk.BOTTOM)
+            ir["command"] = self.callUpdate
         else:
             self.erro.pack_forget()
             self.erro = tk.Frame(None)
@@ -484,18 +571,54 @@ class Application:
     
     def callUpdate(self):
         valores = ""
-        if self.ent1.get() != self.vazio:
-            valores = valores + "cpf='" + self.ent1.get() + "', "
-        if self.ent2.get() != self.vazio:
-            valores = valores + "p_nome='" + self.ent2.get() + "', "
-        if self.ent3.get() != self.vazio:
-            valores = valores + "u_nome='" + self.ent3.get() + "', "
-        if self.ent4.get() != self.vazio:
-            valores = valores + "data_nascimento='" + self.ent4.get() + "', "
-        if self.ent6.get() != self.vazio:
-            valores = valores + "endereco='" + self.ent6.get() + "', "
+        if self.op == "pessoa":
+            if self.ent1.get() != self.vazio:
+                valores = valores + "cpf='" + self.ent1.get() + "', "
+            if self.ent2.get() != self.vazio:
+                valores = valores + "p_nome='" + self.ent2.get() + "', "
+            if self.ent3.get() != self.vazio:
+                valores = valores + "u_nome='" + self.ent3.get() + "', "
+            if self.ent4.get() != self.vazio:
+                valores = valores + "data_nascimento='" + self.ent4.get() + "', "
+            if self.ent6.get() != self.vazio:
+                valores = valores + "endereco='" + self.ent6.get() + "', "
+        elif self.op == "regiao":
+            if self.ent1.get() != self.vazio:
+                valores = valores + "nome_regiao='" + self.ent1.get() + "', "
+            if self.ent2.get() != self.vazio:
+                valores = valores + "num_eleitores='" + self.ent2.get() + "', "
+            if self.ent3.get() != self.vazio:
+                valores = valores + "num_candidatos='" + self.ent3.get() + "', "
+        elif self.op == "candidato":
+            if self.ent1.get() != self.vazio:
+                valores = valores + "id_pessoa='" + self.ent1.get() + "', "
+            if self.ent2.get() != self.vazio:
+                valores = valores + "id_regiao='" + self.ent2.get() + "', "
+        elif self.op == "eleitores":
+            if self.ent1.get() != self.vazio:
+                valores = valores + "id_pessoa='" + self.ent1.get() + "', "
+            if self.ent2.get() != self.vazio:
+                valores = valores + "id_regiao='" + self.ent2.get() + "', "
+            if self.ent3.get() != self.vazio:
+                valores = valores + "zona='" + self.ent3.get() + "', "
+            if self.ent6.get() != self.vazio:
+                valores = valores + "secao='" + self.ent6.get() + "', "
+
         valores = valores[:-2]
-        per.update(self, self.op, valores, self.id.get())
+        self.cont4.pack_forget()
+        self.cont5.pack_forget()
+        self.cont6.pack_forget()
+        self.cont7.pack_forget()
+        retorno = per.update(self, self.op, valores, self.id.get())
+        msg = tk.Label(self.cont8, text=retorno)
+        msg["font"] = ("Arial", "10", "bold")
+        msg.pack(side=tk.TOP)
+        ir = tk.Button(self.cont8)
+        ir["text"] = "Ok"
+        ir["font"] = self.fonte
+        ir["width"] = 5
+        ir.pack(side=tk.BOTTOM)
+        ir["command"] = self.Voltar
 
     def Delete(self):
         msg = tk.Label(self.cont3, text="Delete")
@@ -528,12 +651,36 @@ class Application:
 
     def checkDelete(self):
         self.op = self.tabela.get()
-        per.drop(self, self.op)
+        retorno = per.drop(self, self.op)
+        self.cont3.pack_forget()
+        self.cont1.pack_forget()
+        msg = tk.Label(self.cont8, text=retorno)
+        msg["font"] = ("Arial", "10", "bold")
+        msg.pack(side=tk.TOP)
+        ir = tk.Button(self.cont8)
+        ir["text"] = "Ok"
+        ir["font"] = self.fonte
+        ir["width"] = 5
+        ir.pack(side=tk.BOTTOM)
+        ir["command"] = self.Voltar
+
 
     def checkDeleteId(self):
         self.op = self.tabela.get()
-        per.delete(self, self.op, self.id.get())
+        retorno = per.delete(self, self.op, self.id.get())
+        self.cont3.pack_forget()
+        self.cont1.pack_forget()
+        msg = tk.Label(self.cont8, text=retorno)
+        msg["font"] = ("Arial", "10", "bold")
+        msg.pack(side=tk.TOP)
+        ir = tk.Button(self.cont8)
+        ir["text"] = "Ok"
+        ir["font"] = self.fonte
+        ir["width"] = 5
+        ir.pack(side=tk.BOTTOM)
+        ir["command"] = self.Voltar
 
 root = tk.Tk()
+root.title("CRUD")
 Application(root)
 root.mainloop()
