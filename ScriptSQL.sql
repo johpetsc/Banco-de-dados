@@ -1,16 +1,18 @@
-DROP TABLE IF EXISTS CARGO_POLITICO;
-DROP TABLE IF EXISTS MIDIA;
-DROP TABLE IF EXISTS NOTICIAS_AVALIADAS;
 DROP TABLE IF EXISTS MEIO_COMUNICACAO;
-DROP TABLE IF EXISTS ELEITOR;
-DROP TABLE IF EXISTS PARTIDO;
-DROP TABLE IF EXISTS CANDIDATO;
-DROP TABLE IF EXISTS REGIAO;
-DROP TABLE IF EXISTS PESSOA;
+DROP TABLE IF EXISTS MIDIA;
+DROP TABLE IF EXISTS NOTICIAS_PARTIDOS;
+DROP TABLE IF EXISTS NOTICIAS_CANDIDATOS;
+DROP TABLE IF EXISTS NOTICIAS_AVALIADAS;
 DROP TABLE IF EXISTS AVALIADOR;
 DROP TABLE IF EXISTS NOTICIA;
-DROP TABLE IF EXISTS NOTICIAS_CANDIDATOS;
-DROP TABLE IF EXISTS NOTICIAS_PARTIDOS;
+DROP TABLE IF EXISTS CANDIDATO;
+DROP TABLE IF EXISTS PARTIDO;
+DROP TABLE IF EXISTS CARGO_POLITICO;
+DROP TABLE IF EXISTS ELEITOR;
+DROP TABLE IF EXISTS REGIAO;
+DROP TABLE IF EXISTS PESSOA;
+
+
 
 CREATE TABLE PESSOA(
   id_pessoa INTEGER PRIMARY KEY AUTO_INCREMENT,
@@ -38,19 +40,6 @@ CREATE TABLE ELEITOR(
   FOREIGN KEY(id_regiao) REFERENCES REGIAO(id_regiao)
 );
 
-CREATE TABLE CANDIDATO (
-  num_id INTEGER PRIMARY KEY AUTO_INCREMENT,
-  id_pessoa INTEGER NOT NULL,
-  id_partido INTEGER NOT NULL,
-  id_regiao INTEGER NOT NULL,
-  id_cargo INTEGER NOT NULL,
-  FOREIGN KEY(id_pessoa) REFERENCES PESSOA(id_pessoa),
-  FOREIGN KEY(id_partido) REFERENCES PARTIDO(id_partido),
-  FOREIGN KEY(id_regiao) REFERENCES REGIAO(id_regiao),
-  FOREIGN KEY(id_cargo) REFERENCES CARGO_POLITICO(id_cargo)
-);
-
-
 CREATE TABLE CARGO_POLITICO (
   id_cargo INTEGER PRIMARY KEY AUTO_INCREMENT,
   num_id INTEGER NOT NULL,
@@ -65,6 +54,19 @@ CREATE TABLE PARTIDO (
   data_fundacao DATE,
   FOREIGN KEY(id_regiao) REFERENCES REGIAO(id_regiao)
 );
+
+CREATE TABLE CANDIDATO (
+  num_id INTEGER PRIMARY KEY AUTO_INCREMENT,
+  id_pessoa INTEGER NOT NULL,
+  id_partido INTEGER NOT NULL,
+  id_regiao INTEGER NOT NULL,
+  id_cargo INTEGER NOT NULL,
+  FOREIGN KEY(id_pessoa) REFERENCES PESSOA(id_pessoa),
+  FOREIGN KEY(id_partido) REFERENCES PARTIDO(id_partido),
+  FOREIGN KEY(id_regiao) REFERENCES REGIAO(id_regiao),
+  FOREIGN KEY(id_cargo) REFERENCES CARGO_POLITICO(id_cargo)
+);
+
 
 CREATE TABLE NOTICIA (
   noticia_id INTEGER PRIMARY KEY AUTO_INCREMENT,
@@ -173,14 +175,14 @@ values (1, 3, 'Partido da Marvel', 'PdM', '1947-06-11'),
        (3, 1, 'Partido Pixar', 'PP', '1986-02-03'),
        (4, 2, 'Partido Harry Potter', 'PHP', '2002-05-11');
 
-INSERT INTO CANDIDATO(num_id, id_partido, id_pessoa, id_regiao)
-values (1, 1, 1, 1),
-       (2, 4, 7, 5),
-       (3, 4, 12, 4),
-       (4, 1, 6, 3),   
-       (5, 2, 2, 5),
-       (6, 2, 8, 4),
-       (7, 3, 13, 2);
+INSERT INTO CANDIDATO(num_id, id_partido, id_pessoa, id_regiao, id_cargo)
+values (1, 1, 1, 1, 1),
+       (2, 4, 7, 5, 2),
+       (3, 4, 12, 4, 3),
+       (4, 1, 6, 3, 4),   
+       (5, 2, 2, 5, 5),
+       (6, 2, 8, 4, 6),
+       (7, 3, 13, 2, 7);
 
 INSERT INTO NOTICIA(noticia_id, data_publicacao, titulo_noticia, texto)
 values (1, '2018-05-12', 'Presidente Batman promete aumento de 200 reais nos salarios', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.'),
@@ -241,3 +243,4 @@ DELIMITER ;
 
 CALL selecionar_pessoas(@total);
 SELECT @total;
+
