@@ -226,11 +226,31 @@ values (1, 4, 'Jornal TV', '2018-11-15'),
        (6, 5, 'Jornal TV', '2018-05-22'),
        (7, 4, 'Jornal Internet', '2018-11-14');
        
+/* 
+	VIEW PARA SELECIONAR O ID E NOME COMPLETO
+   	DE TODAS AS PESSOAS DA TABELA
+*/
+DROP VIEW IF EXISTS id_nomes;
+CREATE VIEW id_nomes AS
+SELECT id_pessoa AS ID, 
+	   concat(p_nome, ' ', u_nome) AS Nome_Completo
+FROM PESSOA;
+
+SELECT * FROM id_nomes;
+
+/*
+	VIEW PARA SELECIONAR ID, NOME COMPLETO,
+    	CARGO E REGIAO DE CADA CANDIDATO
+*/
+DROP VIEW IF EXISTS cand;
 CREATE VIEW cand AS
-SELECT num_id AS Id,
-       id_pessoa AS Pessoa,
-       id_regiao AS Regiao
-FROM candidato;
+SELECT pessoa.id_pessoa AS ID,
+	   concat(p_nome, ' ', u_nome) AS Nome,
+       nome_cargo AS Cargo,
+       nome_regiao AS Regiao
+FROM candidato, pessoa, regiao, cargo_politico
+WHERE pessoa.id_pessoa = candidato.id_pessoa AND candidato.id_regiao = regiao.id_regiao AND candidato.id_cargo = cargo_politico.id_cargo
+ORDER BY pessoa.id_pessoa ASC;
 
 SELECT * FROM cand;
 
