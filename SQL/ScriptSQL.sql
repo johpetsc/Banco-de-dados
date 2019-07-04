@@ -254,6 +254,22 @@ ORDER BY pessoa.id_pessoa ASC;
 
 SELECT * FROM cand;
 
+/*
+	VIEW COM NOME DE CADA AVALIADOR
+    	E AVALIAÇAO PARA CADA NOTICIA
+*/
+DROP VIEW IF EXISTS not_aval;
+CREATE VIEW not_aval AS
+SELECT noticia.noticia_id AS Id,
+       titulo_noticia AS Titulo,
+       nome_avaliador AS Avaliador,
+       avaliacao AS Avaliacao
+FROM noticia, avaliador, noticias_avaliadas
+WHERE noticia.noticia_id = noticias_avaliadas.noticia_id AND avaliador.id_avaliador = noticias_avaliadas.id_avaliador AND noticia.noticia_id = noticias_avaliadas.noticia_id
+ORDER BY noticia.noticia_id ASC;
+
+SELECT * FROM not_aval;
+
 DELIMITER $$
 CREATE PROCEDURE selecionar_pessoas (OUT quantidade INT)
 BEGIN
