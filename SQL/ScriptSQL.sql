@@ -233,7 +233,7 @@ values (1, 4, 'Jornal TV', '2018-11-15'),
 DROP VIEW IF EXISTS id_nomes;
 CREATE VIEW id_nomes AS
 SELECT id_pessoa AS ID, 
-	   concat(p_nome, ' ', u_nome) AS Nome_Completo
+       concat(p_nome, ' ', u_nome) AS Nome_Completo
 FROM PESSOA;
 
 SELECT * FROM id_nomes;
@@ -245,7 +245,7 @@ SELECT * FROM id_nomes;
 DROP VIEW IF EXISTS cand;
 CREATE VIEW cand AS
 SELECT pessoa.id_pessoa AS ID,
-	   concat(p_nome, ' ', u_nome) AS Nome,
+       concat(p_nome, ' ', u_nome) AS Nome,
        nome_cargo AS Cargo,
        nome_regiao AS Regiao
 FROM candidato, pessoa, regiao, cargo_politico
