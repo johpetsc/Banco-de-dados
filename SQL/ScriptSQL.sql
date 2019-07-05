@@ -108,13 +108,9 @@ CREATE TABLE NOTICIAS_PARTIDOS(
 CREATE TABLE MIDIA (
   id_midia INTEGER PRIMARY KEY AUTO_INCREMENT,
   noticia_id INTEGER NOT NULL,
-  tipo_midia VARCHAR(20) NOT NULL,
-  nome_arq VARCHAR(30) NOT NULL,
-  tamanho_arq INTEGER NOT NULL,
-  formato_arq VARCHAR(5) NOT NULL,
+  arq longblob not null,
   FOREIGN KEY(noticia_id) REFERENCES NOTICIA(noticia_id)
 );
-
 
 CREATE TABLE MEIO_COMUNICACAO(
   comunicacao_id INTEGER PRIMARY KEY AUTO_INCREMENT,
@@ -207,15 +203,15 @@ values (1, 1, 'Fake'),
        (4, 2, 'Nao Fake'),
        (5, 2, 'Fake');
 
-INSERT INTO MIDIA(id_midia, noticia_id, tipo_midia, nome_arq, tamanho_arq, formato_arq)
-values (1, 1, 'Imagem', 'batman_2017', 109, 'jpg'),
-       (2, 4, 'Imagem', 'grafico_votos', 201, 'png'),
-       (3, 5, 'Audio', 'aquaman_interrogatorio', 2110, 'mp3'),
-       (4, 4, 'Video', 'diana_em_cs', 13490, 'avi'),
-       (5, 2, 'Audio', 'prova_desvio_dc', 1600, 'mp3'),
-       (6, 3, 'Imagem', 'pp_alia_php', 170, 'jpg'),
-       (7, 5, 'Imagem', 'aquaman_2018', 111, 'jpg'),
-       (8, 3, 'Video', 'php_pp_juntos', 9550, 'mp4');
+INSERT INTO MIDIA(noticia_id, arq)
+values (1, load_file('C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/foto1.jpg')),
+       (4, load_file('C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/foto2.jpg')),
+       (5, load_file('C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/foto3.jpg')),
+       (4, load_file('C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/foto4.jpg')),
+       (2, load_file('C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/foto5.jpg')),
+       (3, load_file('C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/foto6.jpg')),
+       (5, load_file('C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/foto7.jpg')),
+       (3, load_file('C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/foto8.jpg'));
 
 INSERT INTO MEIO_COMUNICACAO(comunicacao_id, noticia_id, tipo_meiocom, data_postagem)
 values (1, 4, 'Jornal TV', '2018-11-15'),
@@ -314,4 +310,3 @@ DELIMITER ;
 CALL noti_nofake(@total_noticias);
 
 SELECT @total_noticias;
-
