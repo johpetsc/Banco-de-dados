@@ -222,6 +222,16 @@ values (1, 4, 'Jornal TV', '2018-11-15'),
        (6, 5, 'Jornal TV', '2018-05-22'),
        (7, 4, 'Jornal Internet', '2018-11-14');
        
+INSERT INTO NOTICIAS_CANDIDATOS(noticia_id, num_id)
+values (1, 1),
+       (4, 3),
+       (5, 4);
+       
+INSERT INTO NOTICIAS_PARTIDOS(noticia_id, id_partido)
+values (2, 2),
+       (3, 3),
+       (3, 4);
+       
 /* 
     VIEW PARA SELECIONAR O ID E NOME COMPLETO
     DE TODAS AS PESSOAS DA TABELA
