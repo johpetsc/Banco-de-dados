@@ -42,7 +42,7 @@ CREATE TABLE ELEITOR(
 
 CREATE TABLE CARGO_POLITICO (
   id_cargo INTEGER PRIMARY KEY AUTO_INCREMENT,
-  num_id INTEGER NOT NULL,
+  id_candidato INTEGER NOT NULL,
   nome_cargo VARCHAR(50) NOT NULL
 );
 
@@ -56,7 +56,7 @@ CREATE TABLE PARTIDO (
 );
 
 CREATE TABLE CANDIDATO (
-  num_id INTEGER PRIMARY KEY AUTO_INCREMENT,
+  id_candidato INTEGER PRIMARY KEY AUTO_INCREMENT,
   id_pessoa INTEGER NOT NULL,
   id_partido INTEGER NOT NULL,
   id_regiao INTEGER NOT NULL,
@@ -91,10 +91,10 @@ CREATE TABLE NOTICIAS_AVALIADAS (
 
 CREATE TABLE NOTICIAS_CANDIDATOS(
   noticia_id INTEGER NOT NULL,
-  num_id INTEGER NOT NULL,
-  PRIMARY KEY(noticia_id, num_id),
+  id_candidato INTEGER NOT NULL,
+  PRIMARY KEY(noticia_id, id_candidato),
   FOREIGN KEY(noticia_id) REFERENCES NOTICIA(noticia_id),
-  FOREIGN KEY(num_id) REFERENCES CANDIDATO(num_id)
+  FOREIGN KEY(id_candidato) REFERENCES CANDIDATO(id_candidato)
 );
 
 CREATE TABLE NOTICIAS_PARTIDOS(
@@ -156,7 +156,7 @@ values (1, 3, 3, 'Atlantis High School', 011),
        (11, 12, 4, 'Ohio´s Kids School', 012),
        (12, 13, 2, 'Californa Kindergarten', 080);
 
-INSERT INTO CARGO_POLITICO(id_cargo, num_id, nome_cargo)
+INSERT INTO CARGO_POLITICO(id_cargo, id_candidato, nome_cargo)
 values (1, 1, 'Presidente'),
        (2, 5, 'Governador'),
        (3, 2, 'Prefeito'),
@@ -171,7 +171,7 @@ values (1, 3, 'Partido da Marvel', 'PdM', '1947-06-11'),
        (3, 1, 'Partido Pixar', 'PP', '1986-02-03'),
        (4, 2, 'Partido Harry Potter', 'PHP', '2002-05-11');
 
-INSERT INTO CANDIDATO(num_id, id_partido, id_pessoa, id_regiao, id_cargo)
+INSERT INTO CANDIDATO(id_candidato, id_partido, id_pessoa, id_regiao, id_cargo)
 values (1, 1, 1, 1, 1),
        (2, 4, 7, 5, 2),
        (3, 4, 12, 4, 3),
@@ -222,7 +222,7 @@ values (1, 4, 'Jornal TV', '2018-11-15'),
        (6, 5, 'Jornal TV', '2018-05-22'),
        (7, 4, 'Jornal Internet', '2018-11-14');
        
-INSERT INTO NOTICIAS_CANDIDATOS(noticia_id, num_id)
+INSERT INTO NOTICIAS_CANDIDATOS(noticia_id, id_candidato)
 values (1, 1),
        (4, 3),
        (5, 4);
