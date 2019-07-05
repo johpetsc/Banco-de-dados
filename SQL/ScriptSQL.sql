@@ -227,50 +227,59 @@ values (1, 4, 'Jornal TV', '2018-11-15'),
        (7, 4, 'Jornal Internet', '2018-11-14');
        
 /* 
-	VIEW PARA SELECIONAR O ID E NOME COMPLETO
-   	DE TODAS AS PESSOAS DA TABELA
+    VIEW PARA SELECIONAR O ID E NOME COMPLETO
+    DE TODAS AS PESSOAS DA TABELA
 */
 DROP VIEW IF EXISTS id_nomes;
 CREATE VIEW id_nomes AS
 SELECT id_pessoa AS ID, 
-       concat(p_nome, ' ', u_nome) AS Nome_Completo
+	concat(p_nome, ' ', u_nome) AS Nome_Completo
 FROM PESSOA;
 
 SELECT * FROM id_nomes;
 
 /*
-	VIEW PARA SELECIONAR ID, NOME COMPLETO,
-    	CARGO E REGIAO DE CADA CANDIDATO
+    VIEW PARA SELECIONAR ID, NOME COMPLETO,
+    CARGO E REGIAO DE CADA CANDIDATO
 */
 DROP VIEW IF EXISTS cand;
 CREATE VIEW cand AS
 SELECT pessoa.id_pessoa AS ID,
-       concat(p_nome, ' ', u_nome) AS Nome,
-       nome_cargo AS Cargo,
-       nome_regiao AS Regiao
+	concat(p_nome, ' ', u_nome) AS Nome,
+        nome_cargo AS Cargo,
+        nome_regiao AS Regiao
 FROM candidato, pessoa, regiao, cargo_politico
-WHERE pessoa.id_pessoa = candidato.id_pessoa AND candidato.id_regiao = regiao.id_regiao AND candidato.id_cargo = cargo_politico.id_cargo
+WHERE pessoa.id_pessoa = candidato.id_pessoa 
+	AND candidato.id_regiao = regiao.id_regiao 
+        AND candidato.id_cargo = cargo_politico.id_cargo
 ORDER BY pessoa.id_pessoa ASC;
 
 SELECT * FROM cand;
 
 /*
-	VIEW COM AVALIACAO DO NORMAN OSBORN
-    	PARA CADA NOTICIA
+    VIEW COM AVALIACAO DO NORMAN OSBORN
+    PARA CADA NOTICIA
 */
-DROP VIEW IF EXISTS not_norman;
-CREATE VIEW not_norman AS
+DROP VIEW IF EXISTS not_aval;
+CREATE VIEW not_aval AS
 SELECT noticia.noticia_id AS Id,
-       titulo_noticia AS Titulo,
-       avaliacao AS Avaliacao
+        titulo_noticia AS Titulo,
+        avaliacao AS Avaliacao
 FROM noticia, avaliador, noticias_avaliadas
-WHERE noticia.noticia_id = noticias_avaliadas.noticia_id AND avaliador.id_avaliador = noticias_avaliadas.id_avaliador
-	  AND noticia.noticia_id = noticias_avaliadas.noticia_id AND nome_avaliador = 'Norman Osborn'
+WHERE noticia.noticia_id = noticias_avaliadas.noticia_id
+	AND avaliador.id_avaliador = noticias_avaliadas.id_avaliador
+	AND noticia.noticia_id = noticias_avaliadas.noticia_id 
+        AND nome_avaliador = 'Otto Octavius'
 ORDER BY nome_avaliador;
 
-SELECT * FROM not_norman;
+SELECT * FROM not_aval;
 
+/*
+    PROCEDURE QUE RETORNA O NUMERO
+    TOTAL DE PESSOAS NA TABELA PESSOA
+*/
 DELIMITER $$
+DROP PROCEDURE selecionar_pessoas;
 CREATE PROCEDURE selecionar_pessoas (OUT quantidade INT)
 BEGIN
     SELECT COUNT(*) INTO quantidade FROM pessoa;
@@ -278,5 +287,31 @@ END $$
 DELIMITER ;
 
 CALL selecionar_pessoas(@total);
+
 SELECT @total;
+
+/*
+    PROCEDURE QUE RETORNA O NUMERO TOTAL
+    DE NOTICIAS AVALIADAS COMO NAO FAKE
+*/
+
+DELIMITER $$
+DROP PROCEDURE noti_nofake;
+CREATE PROCEDURE noti_nofake (OUT nr_noticias INT)
+BEGIN
+    SELECT COUNT('noticia.noticia_id AS Id,
+	titulo_noticia AS Titulo,
+	avaliacao AS Avaliacao')
+    INTO nr_noticias
+    FROM noticia, avaliador, noticias_avaliadas
+    WHERE noticia.noticia_id = noticias_avaliadas.noticia_id 
+    	AND avaliador.id_avaliador = noticias_avaliadas.id_avaliador
+	AND noticia.noticia_id = noticias_avaliadas.noticia_id 
+        AND avaliacao = 'Nao Fake';
+END $$
+DELIMITER ;
+
+CALL noti_nofake(@total_noticias);
+
+SELECT @total_noticias;
 
