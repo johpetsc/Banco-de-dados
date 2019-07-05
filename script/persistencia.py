@@ -13,7 +13,7 @@ class Persistencia:
         elif tab == "regiao":
             frase = "nome_regiao, num_eleitores, num_candidatos"
         elif tab == "candidato":
-            frase = "id_pessoa, id_regiao"
+            frase = "id_partido, id_pessoa, id_regiao, id_cargo"
         elif tab == "eleitor":
             frase = "id_pessoa, id_regiao, zona, secao"
         try:
