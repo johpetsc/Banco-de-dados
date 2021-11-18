@@ -1,5 +1,5 @@
 import tkinter as tk
-from persistencia import Persistencia as per
+from crud import Persistencia as per
 
 class Application:
     def __init__(self, master=None):
